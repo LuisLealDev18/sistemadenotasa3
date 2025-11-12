@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reservas Hotel JILF</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.2.0/fullcalendar.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <!-- Logo do Hotel -->
+      <img src="hotel_logo.png" alt="Hotel JILF Logo" class="logo">
+      <h1>Reservas Hotel JILF</h1>
+    </header>
+
+    <!-- Botões para navegar pelas funcionalidades -->
+    <div class="button-container">
+      <button id="cadastroReservaBtn" class="btn">Cadastro de Reserva</button>
+      <button id="checkinBtn" class="btn">Check-IN</button>
+      <button id="checkoutBtn" class="btn">Check-OUT</button>
+      <button id="calendarioBtn" class="btn">Calendário de Reservas</button>
+      <button id="historicoBtn" class="btn">Histórico de Reservas</button>
+    </div>
+
+    <!-- Calendário de Reservas -->
+    <h2>Calendário de Reservas</h2>
+    <div id="calendar"></div>
+
+    <!-- Botão de Logout -->
+    <button id="logoutBtn" class="btn logout-btn">Sair</button>
+  </div>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+  <script src="logout.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.2.0/fullcalendar.min.js"></script>
+
+  <script>
+    // Navegação entre páginas
+    document.getElementById('cadastroReservaBtn').addEventListener('click', function() {
+      window.location.href = 'cadastroreserva.html';  // Redireciona para a página de cadastro de reserva
+    });
+
+    document.getElementById('checkinBtn').addEventListener('click', function() {
+      window.location.href = 'checkin.html';  // Redireciona para a página de check-in
+    });
+
+    document.getElementById('checkoutBtn').addEventListener('click', function() {
+      window.location.href = 'checkout.html';  // Redireciona para a página de check-out
+    });
+
+    document.getElementById('calendarioBtn').addEventListener('click', function() {
+      window.location.href = 'calendariodereserva.html';  // Redireciona para a página do calendário de reservas
+    });
+
+    document.getElementById('historicoBtn').addEventListener('click', function() {
+      window.location.href = 'historico.html';  // Redireciona para a página de histórico de reservas
+    });
+
+    // Inicializa o calendário
+    $('#calendar').fullCalendar({
+      events: function(start, end, timezone, callback) {
+        const reservas = JSON.parse(localStorage.getItem('reservas')) || [];
+        
+        if (reservas.length === 0) {
+          $('#calendar').html('<p>Não há reservas disponíveis.</p>');
+          return;
+        }
+
+        const events = reservas.map(reserva => {
+          return {
+            title: `${reserva.nome} - Quarto ${reserva.quarto}`,
+            start: moment(reserva.dataEntrada, 'YYYY-MM-DD').format(),
+            end: moment(reserva.dataSaida, 'YYYY-MM-DD').format(),
+            allDay: true,
+            color: '#42a5f5' // Cor personalizada
+          };
+        });
+        callback(events);
+      }
+    });
+
+    // Logout
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+      window.location.href = 'login.html';  // Redireciona para o login
+    });
+  </script>
+</body>
+</html>

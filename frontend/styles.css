@@ -1,0 +1,180 @@
+/* Resetando margens e padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Corpo da página */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  padding: 20px;
+  color: #333; /* Texto com cor mais suave */
+}
+
+/* Container principal */
+.container {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 1000px;
+  text-align: center;
+  overflow: hidden; /* Para evitar problemas com excesso de conteúdo */
+  transition: all 0.3s ease-in-out; /* Transição suave para alterações */
+}
+
+/* Estilo do cabeçalho */
+header {
+  margin-bottom: 20px;
+  text-align: center; /* Centraliza a logo e o título */
+}
+
+header .logo {
+  width: 120px; /* Ajuste do tamanho da logo */
+  height: auto; /* Mantém a proporção da imagem */
+  margin-bottom: 20px;
+}
+
+header h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #42a5f5; /* Cor mais harmônica com os botões */
+  font-weight: 600; /* Para maior destaque */
+}
+
+/* Estilo do Calendário */
+.calendar {
+  display: flex;
+  flex-direction: column;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  background-color: #42a5f5; /* Azul para mais harmonia */
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.day-header {
+  flex: 1;
+  text-align: center;
+  font-size: 16px;
+}
+
+/* Linha de quartos */
+.room-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.room-label {
+  width: 100px;
+  font-weight: bold;
+  text-align: left;
+  padding-left: 10px;
+}
+
+.reservas {
+  display: flex;
+  width: 100%;
+}
+
+.empty {
+  flex: 1;
+  height: 30px;
+  background-color: #f4f4f4;
+}
+
+.linha-reserva {
+  height: 30px;
+  background-color: #42a5f5; /* Azul padrão */
+  margin-right: 5px;
+  border-radius: 5px;
+}
+
+/* Estilo dos botões de navegação */
+button {
+  padding: 12px 20px;
+  font-size: 16px;
+  margin-top: 20px;
+  background-color: #42a5f5;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  max-width: 200px; /* Limita a largura dos botões */
+  margin: 10px auto; /* Centraliza os botões */
+}
+
+button:hover {
+  background-color: #1e88e5;
+}
+
+button:active {
+  background-color: #1565c0; /* Cor ao pressionar */
+}
+
+/* Estilo do botão de voltar */
+#voltarBtn {
+  padding: 12px;
+  font-size: 16px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 200px;
+  margin: 10px auto;
+}
+
+#voltarBtn:hover {
+  background-color: #d32f2f;
+}
+
+#voltarBtn:active {
+  background-color: #c62828;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .calendar-header {
+    flex-direction: column;
+  }
+
+  .calendar-header .day-header {
+    flex: none;
+  }
+
+  .container {
+    padding: 20px;
+  }
+
+  .room-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .room-label {
+    margin-bottom: 10px;
+  }
+
+  button {
+    width: 100%; /* Botões ocuparão 100% da largura da tela */
+    font-size: 14px; /* Ajusta o tamanho do texto para dispositivos menores */
+  }
+}
