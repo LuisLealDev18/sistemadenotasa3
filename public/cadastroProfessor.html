@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cadastro de Professor</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Estilos do cabeçalho */
+    header {
+      background-color: #4CAF50;
+      padding: 20px;
+      color: white;
+    }
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 18px;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* Estilos do formulário de cadastro */
+    .login-container {
+      max-width: 400px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-container h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    .login-container input, .login-container select {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .login-container button {
+      width: 100%;
+      padding: 12px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .login-container button:hover {
+      background-color: #45a049;
+    }
+
+    .login-container p {
+      text-align: center;
+      color: red;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cabeçalho com navegação -->
+  <header>
+    <div class="header-container">
+      <h1>Sistema de Notas</h1>
+      <nav>
+        <a href="loginAluno.html">Entrar como Aluno</a> | 
+        <a href="loginProfessor.html">Entrar como Professor</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Formulário de cadastro do professor -->
+  <div class="login-container">
+    <h2>Cadastro de Professor</h2>
+    <form id="cadastroForm">
+      <input type="text" id="nome" placeholder="Nome do Professor" required />
+      <input type="text" id="codigo" placeholder="Código de Acesso" required />
+      
+      <!-- Lista suspensa para a seleção da matéria -->
+      <select id="materia" required>
+        <option value="">Selecione a Matéria</option>
+        <option value="Ciencia Da Computacao">Ciência da Computação</option>
+        <option value="Analise e Desenvolvimento de Sistemas">Análise e Desenvolvimento de Sistemas</option>
+        <option value="Engenharia da Computacao">Engenharia da Computação</option>
+      </select>
+
+      <input type="password" id="senha" placeholder="Senha" required />
+      <button type="submit">Cadastrar</button>
+    </form>
+    <p id="cadastroErro" style="color:red;"></p>
+  </div>
+
+  <!-- Incluindo o arquivo JavaScript -->
+  <script src="cadastroProfessor.js"></script>
+</body>
+</html>

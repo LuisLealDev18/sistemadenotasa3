@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login do Professor</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Estilos do cabeçalho */
+    header {
+      background-color: #4CAF50;
+      padding: 20px;
+      color: white;
+    }
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 18px;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* Estilos do formulário de login */
+    .login-container {
+      max-width: 400px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-container h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    .login-container input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .login-container button {
+      width: 100%;
+      padding: 12px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .login-container button:hover {
+      background-color: #45a049;
+    }
+
+    .login-container p {
+      text-align: center;
+      color: red;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cabeçalho com navegação -->
+  <header>
+    <div class="header-container">
+      <h1>Sistema de Notas</h1>
+      <nav>
+        <a href="loginAluno.html">Entrar como Aluno</a> | 
+        <a href="loginProfessor.html">Entrar como Professor</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Formulário de login do professor -->
+  <div class="login-container">
+    <h2>Login do Professor</h2>
+    <form id="loginForm">
+      <input type="text" id="codigo" placeholder="Código de Acesso" required />
+      <input type="password" id="senha" placeholder="Senha" required />
+      <button type="submit">Entrar</button>
+    </form>
+    <p id="loginErro"></p>
+  </div>
+
+  <script>
+    // Lógica de login do professor
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const codigo = document.getElementById('codigo').value;
+      const senha = document.getElementById('senha').value;
+
+      // Enviando os dados do login para o backend
+      fetch('http://localhost:3000/api/loginProfessor', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ codigo, senha })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          localStorage.setItem('professorLogado', JSON.stringify(data.professor));
+          window.location.href = 'areaProfessor.html';  // Redireciona para a área do professor
+        } else {
+          document.getElementById('loginErro').textContent = data.message;
+        }
+      })
+      .catch(error => {
+        console.error('Erro ao realizar login:', error);
+        document.getElementById('loginErro').textContent = 'Erro no servidor';
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Área do Aluno</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Estilos para a página */
+  </style>
+</head>
+<body>
+
+  <div class="dashboard-container">
+    <div class="header">
+      <h1>Área do Aluno</h1>
+      <p>Bem-vindo, <span id="alunoNome"></span> 👋</p>
+      <p><strong>Matéria:</strong> <span id="materiaAluno"></span></p>
+    </div>
+
+    <div class="info-cards">
+      <div class="card">
+        <h3>Curso</h3>
+        <p id="curso"></p>
+      </div>
+      <div class="card">
+        <h3>Status</h3>
+        <p id="status"></p>
+      </div>
+    </div>
+
+    <button id="logoutBtn">Sair</button>
+  </div>
+
+  <script>
+    const alunoLogado = JSON.parse(localStorage.getItem('alunoLogado'));
+
+    if (!alunoLogado) {
+      window.location.href = 'loginAluno.html';
+    } else {
+      document.getElementById("alunoNome").innerText = alunoLogado.nome;
+      document.getElementById("curso").innerText = alunoLogado.curso;
+      document.getElementById("materiaAluno").innerText = alunoLogado.materia;
+
+      fetch(`http://localhost:3000/api/aluno/${alunoLogado.usuario}`)
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById("status").innerText = data.status ? 'Aprovado' : 'Recuperação';
+        })
+        .catch(error => {
+          console.error('Erro ao carregar dados do aluno:', error);
+        });
+    }
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('alunoLogado');
+      window.location.href = 'loginAluno.html';
+    });
+  </script>
+
+</body>
+</html>

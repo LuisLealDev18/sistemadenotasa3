@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Área do Professor</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Estilos para a página */
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Sistema de Notas</h1>
+    <h2>Bem-vindo, <span id="professorNome"></span></h2>
+    <p><strong>Matéria:</strong> <span id="materiaProfessor"></span></p>
+  </div>
+
+  <div class="dashboard-container">
+    <h2>Cadastrar Notas</h2>
+
+    <div id="alunosLista"></div>
+
+    <button id="logoutBtn">Sair</button>
+  </div>
+
+  <script>
+    const professorLogado = JSON.parse(localStorage.getItem('professorLogado'));
+
+    if (!professorLogado) {
+      window.location.href = 'loginProfessor.html';
+    } else {
+      document.getElementById('professorNome').innerText = professorLogado.nome;
+      document.getElementById('materiaProfessor').innerText = professorLogado.materia;
+
+      fetch(`http://localhost:3000/api/alunos/${professorLogado.materia}`)
+        .then(response => response.json())
+        .then(data => {
+          const alunosListaDiv = document.getElementById('alunosLista');
+          data.alunos.forEach(aluno => {
+            const alunoDiv = document.createElement('div');
+            alunoDiv.innerHTML = `
+              <h3>${aluno.nome}</h3>
+              <label>A1: <input type="number" value="${aluno.notas.A1}" data-aluno-id="${aluno.id}" data-nota="A1"></label>
+              <label>A2: <input type="number" value="${aluno.notas.A2}" data-aluno-id="${aluno.id}" data-nota="A2"></label>
+              <label>A3: <input type="number" value="${aluno.notas.A3}" data-aluno-id="${aluno.id}" data-nota="A3"></label>
+              <span id="percentual-${aluno.id}">Média: ${(aluno.notas.A1 + aluno.notas.A2 + aluno.notas.A3) / 3}%</span>
+            `;
+            alunosListaDiv.appendChild(alunoDiv);
+          });
+        })
+        .catch(error => {
+          console.error('Erro ao carregar dados dos alunos:', error);
+        });
+    }
+
+    document.getElementById('alunosLista').addEventListener('input', (e) => {
+      if (e.target.tagName === 'INPUT') {
+        const alunoId = e.target.getAttribute('data-aluno-id');
+        const nota = e.target.getAttribute('data-nota');
+        const valor = e.target.value;
+
+        fetch(`http://localhost:3000/api/aluno/${alunoId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ [nota]: valor })
+        })
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById(`percentual-${alunoId}`).innerText = `Média: ${data.media}%`;
+        })
+        .catch(error => {
+          console.error('Erro ao salvar notas:', error);
+        });
+      }
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('professorLogado');
+      window.location.href = 'loginProfessor.html';
+    });
+  </script>
+
+</body>
+</html>
